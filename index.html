@@ -63,5 +63,38 @@ function updateStreak(){
   }
 
   render();
-}function resetDay(){if(state.done[selected]){delete state.done[selected];state.xp=Math.max(0,state.xp-125);state.streak=Math.max(0,state.streak-1)}render()}render();if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+}function resetDay(){
+  if(state.done[selected]){
+    delete state.done[selected];
+    state.xp=Math.max(0,state.xp-125);
+
+    const today=todayKey();
+    delete state.completedDates[today];
+
+    const dates=Object.keys(state.completedDates).sort();
+    state.streak=0;
+
+    if(dates.length){
+      let count=1;
+
+      for(let i=dates.length-1;i>0;i--){
+        const a=new Date(dates[i]);
+        const b=new Date(dates[i-1]);
+        const diff=Math.round((a-b)/86400000);
+
+        if(diff===1){
+          count++;
+        }else if(diff===2 && a.getDay()===1){
+          count++;
+        }else{
+          break;
+        }
+      }
+
+      state.streak=count;
+    }
+  }
+
+  render();
+}render();if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script></body></html>
