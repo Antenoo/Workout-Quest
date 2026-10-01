@@ -47,6 +47,13 @@ function updateStreak(){
 
   save();
 }
+  function toggleExercise(day,exercise,checked){
+  if(!state.exerciseDone)state.exerciseDone={};
+  if(!state.exerciseDone[day])state.exerciseDone[day]={};
+
+  state.exerciseDone[day][exercise]=checked;
+  save();
+
 }function renderStats(){const level=Math.floor(state.xp/500)+1,into=state.xp%500;$("level").textContent=level;$("xp").textContent=state.xp;$("streak").textContent=state.streak;$("xplabel").textContent=`${into} / 500 XP`;$("weeklabel").textContent=`${weekDone()} / 6 this week`;$("xpfill").style.width=(into/500*100)+"%"}function renderBadges(){const b=[["First Blood","Complete your first quest.",state.xp>=125],["Three’s a Charm","Complete 3 quests.",weekDone()>=3],["Getting Stronger","Reach 500 XP.",state.xp>=500],["Cardio Goblin","Complete Saturday.",!!state.done[5]],["Leg Day Survivor","Complete Tuesday or Thursday.",!!state.done[1]||!!state.done[3]],["Full Party","Complete all 6 training days.",weekDone()>=6],["The First Month","Reach 2000 XP.",state.xp>=2000],["Level 10","Reach Level 10.",state.xp>=4500]];$("badges").innerHTML=b.map(x=>`<div class="badge ${x[2]?'':'locked'}"><strong>${x[2]?'🏆':'🔒'} ${x[0]}</strong><span>${x[1]}</span></div>`).join("")}function render(){renderTabs();renderQuest();renderStats();renderBadges();save()}function selectDay(i){selected=i;render()}function completeQuest(){
   if(selected===6)return;
 
