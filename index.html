@@ -10,7 +10,8 @@ const days=[
 {name:"Saturday",title:"Conditioning",ex:[["High knees","30 sec"],["Bodyweight squats","30 sec"],["Mountain climbers","30 sec"],["Alternating reverse lunges","30 sec"],["Push-ups","30 sec"],["Plank","30 sec"]]},
 {name:"Sunday",title:"Recovery Day",ex:[]}
 ];
-const $=id=>document.getElementById(id);let state=JSON.parse(localStorage.getItem("workoutQuest")||'{"xp":0,"streak":0,"done":{},"completedDates":{}}');
+const $=id=>document.getElementById(id);let state=JSON.parse(localStorage.getItem("workoutQuest")||'{"xp":0,"streak":0,"done":{},"completedDates":{}}');localStorage.removeItem("workoutQuest");
+location.reload();
 if(!state.completedDates)state.completedDates={};let selected=Number(localStorage.getItem("wqDay")||0);function save(){localStorage.setItem("workoutQuest",JSON.stringify(state));localStorage.setItem("wqDay",selected)}function weekDone(){return days.slice(0,6).filter((_,i)=>state.done[i]).length}function todayKey(){
   const d=new Date();
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
